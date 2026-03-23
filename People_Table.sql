@@ -9,6 +9,8 @@ CREATE TABLE People(
     UpTo INT --What Perek of Tehillim needs to be said next
 );
 
+--For purposes of time, the Communities and Matchups tables have been removed.
+
 --Table of communities that the people may be connected to
 CREATE TABLE Communities(
     CommunityID INT PRIMARY KEY IDENTITY(1,1), --ID number per community

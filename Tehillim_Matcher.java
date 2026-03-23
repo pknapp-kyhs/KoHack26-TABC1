@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.sql.Statement;
 import java.sql.DriverManager;
@@ -34,8 +35,10 @@ public class Tehillim_Matcher {
         //Interfaces with the user and sends them to the appropriate function
         Scanner scan = new Scanner(System.in);
         String response ="";
+        System.out.println("Welcome to the Tehillim Matcher!\nTo find someone to daven for, enter \"F\".\nTo enter someone new to daven for, enter \"N\".");
+        response = scan.nextLine();
         while (!response.equals("F") && !response.equals("N") && !response.equals("f") && !response.equals("n")){
-            System.out.println("Welcome to the Tehillim Matcher!\nTo find someone to daven for, enter \"F\".\nTo enter someone new to daven for, enter \"N\".");
+            System.out.println("I'm sorry, I didn't understand that.\nTo find someone to daven for, enter \"F\".\nTo enter someone new to daven for, enter \"N\".");
             response = scan.nextLine();
         }
         response = response.toUpperCase();
@@ -53,8 +56,10 @@ public class Tehillim_Matcher {
         }
 
         //Asks the user if they want to "play again", or quit.
+        System.out.println("\n\nIf you would like to take another action, enter \"C\" to continue. Otherwise, press \"Q\" to quit.");
+        response = scan.nextLine();
         while (!response.equals("C") && !response.equals("Q") && !response.equals("c") && !response.equals("q")){
-            System.out.println("\n\nIf you would like to take another action, enter \"C\" to continue. Otherwise, press \"Q\" to quit.");
+            System.out.println("I'm sorry, I didn't understand that.\nIf you would like to take another action, enter \"C\" to continue. Otherwise, press \"Q\" to quit.");
             response = scan.nextLine();
         }
         response = response.toUpperCase();
@@ -105,8 +110,11 @@ public class Tehillim_Matcher {
         boolean eng = false;
         boolean heb = false;
         boolean trans = false;
+        System.out.println("\nFor English only, enter \"E\". For Hebrew only, enter \"H\". For Hebrew Transliteration only, enter \"T\".\nFor English and Hebrew, enter \"EH\". For Hebrew and Hebrew Transliteration, enter \"HT\". For English and Hebrew Transliteration, enter \"ET\".\nFor all three, enter \"A\".");
+        response = scan.nextLine();
+        response = response.toUpperCase();
         while (!response.equals("E") && !response.equals("H") && !response.equals("T") && !response.equals("EH") && !response.equals("HT") && !response.equals("ET") && !response.equals("A")){
-            System.out.println("\nFor English only, enter \"E\". For Hebrew only, enter \"H\". For Hebrew Transliteration only, enter \"T\".\nFor English and Hebrew, enter \"EH\". For Hebrew and Hebrew Transliteration, enter \"HT\". For English and Hebrew Transliteration, enter \"ET\".\nFor all three, enter \"A\".");
+            System.out.println("I'm sorry, I didn't understand that.\nFor English only, enter \"E\". For Hebrew only, enter \"H\". For Hebrew Transliteration only, enter \"T\".\nFor English and Hebrew, enter \"EH\". For Hebrew and Hebrew Transliteration, enter \"HT\". For English and Hebrew Transliteration, enter \"ET\".\nFor all three, enter \"A\".");
             response = scan.nextLine();
             response = response.toUpperCase();
         }
@@ -182,17 +190,113 @@ public class Tehillim_Matcher {
             return;
         }
 
-        //Recieves the proper information for the database entry
+        //Recieves the proper information for the database entry, and checks that they are of the right type
         Scanner scan = new Scanner(System.in);
+        boolean error = false;
         System.out.println("\n\nWhat is the name of the person that needs Tehillim?");
         String hebName = scan.nextLine();
+        if (hebName.isBlank()){
+            error = true;
+        }
+        try{
+            Integer.parseInt(hebName);
+            Double.parseDouble(hebName);
+            error = true;
+        } catch (NumberFormatException e){
+        }
+        while (error){
+            error = false;
+            System.out.println("I'm sorry, I didn't understand that.\nWhat is the name of the person that needs Tehillim?");
+            hebName = scan.nextLine();
+            if (hebName.isBlank()){
+                error = true;
+            }
+            try{
+                Integer.parseInt(hebName);
+                Double.parseDouble(hebName);
+                error = true;
+            } catch (NumberFormatException e){
+            }
+        }
+        error = false;
+        int age = 0;
         System.out.println("How old is the person?");
-        int age = scan.nextInt();
-        scan.nextLine();
+        try{
+            age = scan.nextInt();
+            scan.nextLine();
+        } catch (InputMismatchException e){
+            error = true;
+            scan.nextLine();
+        }
+        if (age <= 0) {
+            error = true;
+        }
+        while (error){
+            error = false;
+            System.out.println("I'm sorry, I didn't understand that.\nHow old is the person?");
+            try{
+                age = scan.nextInt();
+                scan.nextLine();
+            } catch (InputMismatchException e){
+                error = true;
+                scan.nextLine();
+            }
+            if (age <= 0){
+                error = true;
+            }
+        }
+        error = false;
         System.out.println("Please give a short description about the person and their affliction");
         String bio = scan.nextLine();
+        if (bio.isBlank()){
+            error = true;
+        }
+        try{
+            Integer.parseInt(bio);
+            Double.parseDouble(bio);
+            error = true;
+        } catch (NumberFormatException e){
+        }
+        while (error){
+            error = false;
+            System.out.println("I'm sorry, I didn't understand that.\nPlease give a short description about the person and their affliction");
+            bio = scan.nextLine();
+            if (bio.isBlank()){
+                error = true;
+            }
+            try{
+                Integer.parseInt(bio);
+                Double.parseDouble(bio);
+                error = true;
+            } catch (NumberFormatException e){
+            }
+        }
+        error = false;
         System.out.println("What shul does the person go to?");
-        String shul = scan.nextLine(); 
+        String shul = scan.nextLine();
+        if (shul.isBlank()){
+            error = true;
+        }
+        try{
+            Integer.parseInt(shul);
+            Double.parseDouble(shul);
+            error = true;
+        } catch (NumberFormatException e){
+        }
+        while (error){
+            error = false;
+            System.out.println("I'm sorry, I didn't understand that.\nWhat shul does the person go to?");
+            shul = scan.nextLine();
+            if (shul.isBlank()){
+                error = true;
+            }
+            try{
+                Integer.parseInt(shul);
+                Double.parseDouble(shul);
+                error = true;
+            } catch (NumberFormatException e){
+            }
+        }
         
         //Enters the information into the database
         Statement statement = connection.createStatement();
