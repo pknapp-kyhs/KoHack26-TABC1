@@ -26,7 +26,7 @@ public class Tehillim_Matcher {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             doc = dBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
+            doc.getDocumentElement().normalize();// end of AI generated code.
         } catch (Exception e){
             System.out.println("We're sorry, an issue occured. Please try again later.");
             e.printStackTrace();
@@ -166,7 +166,7 @@ public class Tehillim_Matcher {
         if (upTo == 150){
             upTo = 0;
         }
-        statement.executeQuery("UPDATE People SET UpTo = " + (upTo + 1) + " WHERE PersonID = " + personId);
+        statement.executeUpdate("UPDATE People SET UpTo = " + (upTo + 1) + " WHERE PersonID = " + personId);
         
     }
 
@@ -175,7 +175,7 @@ public class Tehillim_Matcher {
     public static String getString(int id, String landCode)
     {
         NodeList nodes = doc.getElementsByTagName("string");
-        Element element = (Element) nodes.item(id);
+        Element element = (Element) nodes.item(id - 1);
         return element.getElementsByTagName(landCode).item(0).getTextContent();
     }
 
@@ -300,7 +300,7 @@ public class Tehillim_Matcher {
         
         //Enters the information into the database
         Statement statement = connection.createStatement();
-        statement.executeQuery("INSERT INTO People(HebName, Age, Bio, Shul, UpTo) VALUES('" + hebName + "', " + age + ", '" + bio + "', '" + shul + "', 1)");
+        statement.executeUpdate("INSERT INTO People(HebName, Age, Bio, Shul, UpTo) VALUES('" + hebName + "', " + age + ", '" + bio + "', '" + shul + "', 1)");
     }
 
 }
